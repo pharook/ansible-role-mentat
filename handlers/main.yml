@@ -1,0 +1,5 @@
+---
+
+- name: Refresh APT cache
+  apt:
+    update_cache: yes

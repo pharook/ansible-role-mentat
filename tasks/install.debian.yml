@@ -1,0 +1,91 @@
+---
+
+#
+# Remove all possible traces after installation of previous versions of Mentat
+# system to keep the target host as tidy as possible.
+#
+- block:
+
+    - name: Removing traces after installation of previous versions of Mentat
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items: "{{ hm_mentat__deprecated_files }}"
+      when: item not in ["/","/bin","/boot","/lib","/root","/sbin","/usr","/var"]
+
+  when: 'not hm_mentat__skip_cleanup'
+
+#
+# Install APT repository for 'production' level package suite.
+#
+- block:
+
+    - name: Installing APT repository GPG key for Mentat production package suite
+      apt_key:
+        url: "{{ hm_mentat__package_repository_url }}/mentat/deb/mentat-production.gpg"
+        state: present
+      notify: Refresh APT cache
+
+    - name: Removing possible APT repository list file for Mentat development package suite
+      file:
+        path: /etc/apt/sources.list.d/mentat-development.list
+        state: absent
+
+    - name: Fetching APT repository list file for Mentat production package suite
+      get_url:
+        url: "{{ hm_mentat__package_repository_url }}/mentat/deb/mentat-production.list"
+        dest: /etc/apt/sources.list.d/mentat-production.list
+        owner: root
+        group: root
+        mode: 0644
+      notify: Refresh APT cache
+
+  when: 'not "servers-development" in group_names'
+
+#
+# Install APT repository for 'development' level package suite.
+#
+- block:
+
+    - name: Installing APT repository GPG key for Mentat development package suite
+      apt_key:
+        url: "{{ hm_mentat__package_repository_url }}/mentat/deb/mentat-development.gpg"
+        state: present
+      notify: Refresh APT cache
+
+    - name: Removing possible APT repository list file for Mentat production package suite
+      file:
+        path: /etc/apt/sources.list.d/mentat-production.list
+        state: absent
+
+    - name: Fetching current APT repository source file for development Mentat system packages
+      get_url:
+        url: "{{ hm_mentat__package_repository_url }}/mentat/deb/mentat-development.list"
+        dest: /etc/apt/sources.list.d/mentat-development.list
+        owner: root
+        group: root
+        mode: 0644
+      notify: Refresh APT cache
+
+  when: '"servers-development" in group_names'
+
+
+- meta: flush_handlers
+
+
+- name: Installing packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: "{{ hm_mentat__apt_force_update }}"
+  with_items: "{{ hm_mentat__package_list }}"
+
+- name: Installing required Python3 modules
+  pip:
+    requirements: /etc/mentat/requirements.pip
+    executable: pip3
+
+- name: Downloading IP geolocation databases
+  shell: /etc/mentat/scripts/fetch-geoipdb.sh
+  args:
+    creates: /var/opt/opensourcedbs/.download.ts

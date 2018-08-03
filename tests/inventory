@@ -1,0 +1,9 @@
+#
+# This inventory file is used for testing the role with TravisCI.
+#
+
+[servers-development]
+localhost
+
+[servers-mentat]
+localhost

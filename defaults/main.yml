@@ -1,0 +1,123 @@
+---
+
+#
+# Name of the UNIX system user for Mentat system.
+#
+hm_mentat__user: mentat
+
+#
+# Name of the UNIX system group for Mentat system.
+#
+hm_mentat__group: mentat
+
+#
+# Base URL to package repository.
+#
+hm_mentat__package_repository_url: https://alchemist.cesnet.cz
+
+#
+# List of Mentat-related packages, that will be installed on target system.
+#
+hm_mentat__package_list:
+  - mentat-ng
+
+#
+# Skip system cleanup (true,false).
+#
+hm_mentat__skip_cleanup: false
+
+#
+# Force APT cache update before installing any packages ('yes','no')
+#
+hm_mentat__apt_force_update: no
+
+#
+# List of deprecated files and folders that may be stil present after previous
+# versions of Mentat system. These will be removed to keep the system tidy.
+#
+hm_mentat__deprecated_files:
+  - /etc/bash_completion.d/bash_mentat-ng-completion
+  - /etc/default/default_mentat
+  - /etc/mentat/hawat-cli.conf
+  - /etc/mentat/hawat-cli.conf.dpkg-dist
+  - /etc/mentat/hawat-cli.conf.dpkg-old
+  - /etc/mentat/mentat-briefer.conf
+  - /etc/mentat/mentat-briefer.conf.dpkg-dist
+  - /etc/mentat/mentat-briefer.conf.dpkg-old
+  - /etc/mentat/mentat-pickup.conf
+  - /etc/mentat/mentat-pickup.conf.dpkg-dist
+  - /etc/mentat/mentat-pickup.conf.dpkg-old
+  - /etc/mentat/mentat-enricher.conf
+  - /etc/mentat/mentat-enricher.conf.dpkg-dist
+  - /etc/mentat/mentat-enricher.conf.dpkg-old
+  - /etc/mentat/mentat-storage.conf
+  - /etc/mentat/mentat-storage.conf.dpkg-dist
+  - /etc/mentat/mentat-storage.conf.dpkg-old
+  - /etc/mentat/mentat-handyman.conf
+  - /etc/mentat/mentat-handyman.conf.dpkg-dist
+  - /etc/mentat/mentat-handyman.conf.dpkg-old
+  - /etc/mentat/mentat-statistician.conf
+  - /etc/mentat/mentat-statistician.conf.dpkg-dist
+  - /etc/mentat/mentat-statistician.conf.dpkg-old
+  - /etc/mentat/mentat-reporter.conf
+  - /etc/mentat/mentat-reporter.conf.dpkg-dist
+  - /etc/mentat/mentat-reporter.conf.dpkg-old
+  - /etc/mentat/mentat-reporter-ng.conf
+  - /etc/mentat/mentat-reporter-ng.conf.dpkg-dist
+  - /etc/mentat/mentat-reporter-ng.conf.dpkg-old
+  - /etc/mentat/mentat-precache.conf
+  - /etc/mentat/mentat-precache.conf.dpkg-dist
+  - /etc/mentat/mentat-precache.conf.dpkg-old
+  - /etc/mentat/msgtmplts.json
+  - /etc/mentat/msgtmplts.json.dpkg-dist
+  - /etc/mentat/msgtmplts.json.dpkg-old
+  - /etc/mentat/scripts/cron_hawat-negistry
+  - /etc/mentat/scripts/cron_hawat-negistry.dpkg-dist
+  - /etc/mentat/scripts/cron_hawat-precache
+  - /etc/mentat/scripts/cron_hawat-precache.dpkg-dist
+  - /etc/mentat/scripts/cron_mentat-backup
+  - /etc/mentat/scripts/cron_mentat-backup.dpkg-dist
+  - /etc/mentat/scripts/cron_mentat-briefer
+  - /etc/mentat/scripts/cron_mentat-briefer.dpkg-dist
+  - /etc/mentat/scripts/cron_mentat-confsync
+  - /etc/mentat/scripts/cron_mentat-confsync.dpkg-dist
+  - /etc/mentat/scripts/cron_mentat-precache
+  - /etc/mentat/scripts/cron_mentat-precache.dpkg-dist
+  - /etc/mentat/scripts/cron_mentat-statistician
+  - /etc/mentat/scripts/cron_mentat-statistician.dpkg-dist
+  - /etc/mentat/scripts/cron_mentat-reporter
+  - /etc/mentat/scripts/cron_mentat-reporter.dpkg-dist
+  - /etc/mentat/scripts/cron_mentat-reporter-ng
+  - /etc/mentat/scripts/cron_mentat-reporter-ng.dpkg-dist
+  - /etc/mentat/scripts/cron_whoisdump
+  - /etc/mentat/scripts/cron_whoisdump.dpkg-dist
+  - /etc/mentat/scripts/mongo-dbfix.js
+  - /etc/apt/sources.list.d/certs.list
+  - /etc/cron.d/fetchiplistpasnet
+  - /etc/cron.d/fetchgeoipdb
+  - /etc/cron.d/mbackuppy
+  - /etc/cron.d/mbriefer
+  - /etc/cron.d/mcleanuppy
+  - /etc/cron.d/mnegistry
+  - /etc/cron.d/mprecache
+  - /etc/cron.d/mwhoisdump
+  - /etc/cron.d/mreporter-ng
+  - /etc/cron.d/mreporter-ng-test
+  - /etc/cron.d/mstatistician
+  - /etc/cron.d/mentat-statistician
+  - /etc/cron.d/mentat-precache
+  - /etc/cron.d/mentat-whoisdump
+  - /var/mentat/log/mentat-concentrator.log
+  - /var/mentat/log/mentat-pickup.log
+  - /var/mentat/log/mentat-logalyzer.log
+  - /var/mentat/log/mentat-master.log
+  - /var/mentat/log/mentat-enricher.log
+  - /var/mentat/log/mentat-storage.log
+  - /var/mentat/log/mentat-reporter.log
+  - /var/mentat/log/mentat-wardenin.log
+  - /var/mentat/log/mentat-wardenout.log
+  - /var/mentat/log/mentat-precache.log
+  - /var/mentat/log/mentat-statistician.log
+  - /var/mentat/spool/_pickup
+  - /var/mentat/spool/_enricher
+  - /var/mentat/spool/_storage

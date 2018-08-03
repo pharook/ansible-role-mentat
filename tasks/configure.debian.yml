@@ -1,0 +1,21 @@
+---
+
+- name: Creating required databases
+  shell: /etc/mentat/scripts/sqldb-init.sh
+
+- name: Creating database schemas and indices
+  shell: /usr/local/bin/mentat-dbmngr.py --command init
+
+- name: Precaching database enumerations and dictionaries
+  shell: /usr/local/bin/mentat-precache.py --allow-empty
+
+- name: Enable Mentat post-processing modules
+  shell: /usr/local/bin/mentat-controller.py --command=enable
+  register: mentat_enable_result
+  changed_when: "'Enabling module' in mentat_enable_result.stdout"
+
+- name: Ensuring Mentat system is running and enabled at system start
+  service:
+    name: mentat
+    state: started
+    enabled: yes

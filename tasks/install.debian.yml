@@ -20,20 +20,20 @@
 #
 - block:
 
-    - name: Installing APT repository GPG key for Mentat production package suite
-      apt_key:
-        url: "{{ hm_mentat__package_repository_url }}/mentat/deb/mentat-production.gpg"
-        state: present
-      notify: Refresh APT cache
-
     - name: Removing possible APT repository list file for Mentat development package suite
       file:
         path: /etc/apt/sources.list.d/mentat-development.list
         state: absent
 
+    - name: Installing APT repository GPG key for Mentat production package suite
+      apt_key:
+        url: "{{ hm_mentat__package_repository_url }}/mentat/deb/mentat-{{ hm_mentat__suite_production }}.gpg"
+        state: present
+      notify: Refresh APT cache
+
     - name: Fetching APT repository list file for Mentat production package suite
       get_url:
-        url: "{{ hm_mentat__package_repository_url }}/mentat/deb/mentat-production.list"
+        url: "{{ hm_mentat__package_repository_url }}/mentat/deb/mentat-{{ hm_mentat__suite_production }}.list"
         dest: /etc/apt/sources.list.d/mentat-production.list
         owner: root
         group: root
@@ -47,20 +47,20 @@
 #
 - block:
 
-    - name: Installing APT repository GPG key for Mentat development package suite
-      apt_key:
-        url: "{{ hm_mentat__package_repository_url }}/mentat/deb/mentat-development.gpg"
-        state: present
-      notify: Refresh APT cache
-
     - name: Removing possible APT repository list file for Mentat production package suite
       file:
         path: /etc/apt/sources.list.d/mentat-production.list
         state: absent
 
+    - name: Installing APT repository GPG key for Mentat development package suite
+      apt_key:
+        url: "{{ hm_mentat__package_repository_url }}/mentat/deb/mentat-{{ hm_mentat__suite_development }}.gpg"
+        state: present
+      notify: Refresh APT cache
+
     - name: Fetching current APT repository source file for development Mentat system packages
       get_url:
-        url: "{{ hm_mentat__package_repository_url }}/mentat/deb/mentat-development.list"
+        url: "{{ hm_mentat__package_repository_url }}/mentat/deb/mentat-{{ hm_mentat__suite_development }}.list"
         dest: /etc/apt/sources.list.d/mentat-development.list
         owner: root
         group: root

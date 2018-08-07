@@ -45,31 +45,49 @@ There are following internal role variables defined in ``defaults/main.yml`` fil
 that can be overriden and adjusted as needed:
 
 .. envvar:: hm_mentat__user
+
 	Name of the UNIX system user for Mentat system.
 
 	*Type:* ``string`` | *Default:* ``"mentat"``
 
 .. envvar:: hm_mentat__group
+
 	Name of the UNIX system group for Mentat system.
 
 	*Type:* ``string`` | *Default:* ``"mentat"``
 
 .. envvar:: hm_mentat__package_repository_url
+
 	Base URL to package repository.
 
 	*Type:* ``string`` | *Default:* ``"https://alchemist.cesnet.cz"``
 
+.. envvar:: hm_mentat__suite_production
+
+	Name of the package suite to use for *prodution* level servers.
+
+	*Type:* ``string`` | *Default:* ``"production"``
+
+.. envvar:: hm_mentat__suite_development
+
+	Name of the package suite to use for *development* level servers.
+
+	*Type:* ``string`` | *Default:* ``"development"``
+
 .. envvar:: hm_mentat__package_list
+
 	List of Mentat-related packages, that will be installed on target system.
 
 	*Type:* ``list of strings`` | *Default:* ``["mentat-ng"]``
 
 .. envvar:: hm_mentat_skip_cleanup
+
 	Skip system cleanup (flag).
 
 	*Type:* ``bool`` | *Default:* ``False``
 
 .. envvar:: hm_mentat__deprecated_files
+
 	List of deprecated files and folders that may be stil present after previous
 	versions of Mentat system. These will be removed to keep the system tidy.
 
@@ -78,6 +96,7 @@ that can be overriden and adjusted as needed:
 Additionally this role makes use of following built-in Ansible variables:
 
 .. envvar:: group_names
+
 	I like to use certain groups for dividing servers according to the service
 	level. Currently following levels are recognized:
 

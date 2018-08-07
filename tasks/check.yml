@@ -1,0 +1,10 @@
+---
+
+- name: Group membership validity check - demo|development|production servers
+  assert:
+    that:
+        - '"servers-demo" in group_names or "servers-development" in group_names or "servers-production" in group_names'
+        - 'not "servers-demo" in group_names or ("servers-demo" in group_names and not ("servers-development" in group_names or "servers-production" in group_names))'
+        - 'not "servers-development" in group_names or ("servers-development" in group_names and not ("servers-demo" in group_names or "servers-production" in group_names))'
+        - 'not "servers-production" in group_names or ("servers-production" in group_names and not ("servers-demo" in group_names or "servers-development" in group_names))'
+    msg: "Server must be member of exactly one of the 'servers-demo', 'servers-development', 'servers-production' groups"

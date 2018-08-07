@@ -75,10 +75,9 @@
 
 - name: Installing packages
   apt:
-    name: "{{ item }}"
+    name: "{{ hm_mentat__package_list }}"
     state: latest
     update_cache: "{{ hm_mentat__apt_force_update }}"
-  with_items: "{{ hm_mentat__package_list }}"
 
 - name: Installing required Python3 modules
   pip:

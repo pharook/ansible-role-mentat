@@ -1,29 +1,31 @@
 .. _section-role-mentat:
 
-Role *mentat*
+Role **mentat**
 ================================================================================
 
-*Ansible role for convenient installation of the `Mentat IDS and SIEM system <https://mentat.cesnet.cz/>`__.*
+Ansible role for convenient installation of the `Mentat IDS and SIEM system <https://mentat.cesnet.cz/>`__.
+
+* `Ansible Galaxy page <https://galaxy.ansible.com/honzamach/mentat>`__
+* `GitHub repository <https://github.com/honzamach/ansible-role-mentat>`__
+* `Travis CI page <https://travis-ci.org/honzamach/ansible-role-mentat>`__
 
 
 Description
 --------------------------------------------------------------------------------
 
 This role attempts to keep the things as simple as possible and performs only
-basic installation of the system.
+basic installation of the system. All of the modules need to be configured manually
+including the web interface.
+
+.. note::
+
+    This role supports the :ref:`template customization <section-overview-customize-templates>` feature.
 
 
 Requirements
 --------------------------------------------------------------------------------
 
-PostgreSQL database and Python3 with pip3 utility should already be installed on
-target system.
-
-
-Managed files
---------------------------------------------------------------------------------
-
-This role does not directly manage content of any files on target system.
+Python3 with pip3 utility should already be installed on target system.
 
 
 Dependencies
@@ -38,7 +40,16 @@ Following roles have direct dependency on this role:
 * :ref:`mentat_demo <section-role-mentat-demo>`
 
 
-Role Variables
+Managed files
+--------------------------------------------------------------------------------
+
+This role directly manages content of following files on target system:
+
+* ``/etc/nagios/nrpe.d/mentat.cfg``
+* ``/opt/system-status/system-status.d/40-mentat``
+
+
+Role variables
 --------------------------------------------------------------------------------
 
 There are following internal role variables defined in ``defaults/main.yml`` file,
@@ -48,66 +59,109 @@ that can be overriden and adjusted as needed:
 
 	Name of the UNIX system user for Mentat system.
 
-	*Type:* ``string`` | *Default:* ``"mentat"``
+	* *Datatype:* ``string``
+    * *Default:* ``mentat``
 
 .. envvar:: hm_mentat__group
 
 	Name of the UNIX system group for Mentat system.
 
-	*Type:* ``string`` | *Default:* ``"mentat"``
+	* *Datatype:* ``string``
+    * *Default:* ``mentat``
 
 .. envvar:: hm_mentat__package_repository_url
 
 	Base URL to package repository.
 
-	*Type:* ``string`` | *Default:* ``"https://alchemist.cesnet.cz"``
+	* *Datatype:* ``string``
+    * *Default:* ``https://alchemist.cesnet.cz``
 
 .. envvar:: hm_mentat__suite_production
 
 	Name of the package suite to use for *prodution* level servers.
 
-	*Type:* ``string`` | *Default:* ``"production"``
+	* *Datatype:* ``string``
+    * *Default:* ``production``
 
 .. envvar:: hm_mentat__suite_development
 
 	Name of the package suite to use for *development* level servers.
 
-	*Type:* ``string`` | *Default:* ``"development"``
+	* *Datatype:* ``string``
+    * *Default:* ``development``
 
 .. envvar:: hm_mentat__package_list
 
 	List of Mentat-related packages, that will be installed on target system.
 
-	*Type:* ``list of strings`` | *Default:* ``["mentat-ng"]``
+	* *Datatype:* ``list of strings``
+    * *Default:* (please see YAML file ``defaults/main.yml``)
 
 .. envvar:: hm_mentat_skip_cleanup
 
 	Skip system cleanup (flag).
 
-	*Type:* ``bool`` | *Default:* ``False``
+	* *Datatype:* ``boolean``
+    * *Default:* ``false``
 
 .. envvar:: hm_mentat__deprecated_files
 
 	List of deprecated files and folders that may be stil present after previous
 	versions of Mentat system. These will be removed to keep the system tidy.
 
-	*Type:* ``list of strings``
+	* *Datatype:* ``list of strings``
+    * *Default:* (please see YAML file ``defaults/main.yml``)
 
 Additionally this role makes use of following built-in Ansible variables:
 
+.. envvar:: ansible_lsb['codename']
+
+	Debian distribution codename is used for :ref:`template customization <section-overview-customize-templates>`
+	feature.
+
 .. envvar:: group_names
 
-	I like to use certain groups for dividing servers according to the service
-	level. Currently following levels are recognized:
+	See section *Group memberships* below for details.
 
-	* servers-development
-	* servers-production
-	* servers-demo
 
-	This role in particular currently recognizes only ``servers-development`` and
-	``servers-production`` groups. You may use membership in aforementioned groups
-	to choose which package suite (*development* or *production*) will be installed
-	on target host.
+Foreign variables
+--------------------------------------------------------------------------------
+
+This role uses following foreign variables defined in other roles:
+
+:envvar:`hm_monitored__service_name`
+
+    Name of the NRPE service in case the server is in **servers-monitored**
+    group and the playbook is automagically configuring monitoring of the Mentat
+    system.
+
+
+Group memberships
+--------------------------------------------------------------------------------
+
+* **servers-production** or **servers-development** or **servers-demo**
+
+  I like to use certain groups for dividing servers according to the service
+  level. Currently following levels are recognized:
+
+  * servers-development
+  * servers-production
+  * servers-demo
+
+  This role in particular currently recognizes only ``servers-development`` and
+  ``servers-production`` groups. You may use membership in aforementioned groups
+  to choose which package suite (*development* or *production*) will be installed
+  on target host.
+
+* **servers-monitored**
+
+  In case the target server is member of this group Nagios monitoring is automagically
+  configured for the Mentat system.
+
+* **servers-commonenv**
+
+  In case the target server is member of this group system status script is automagically
+  configured for the Mentat system.
 
 
 Installation
@@ -125,8 +179,8 @@ repository please use variation of following command::
 
     git clone https://github.com/honzamach/ansible-role-mentat.git honzamach.mentat
 
-The advantage of using direct Git cloning is the ability to easily update the role
-when new version comes out.
+Currently the advantage of using direct Git cloning is the ability to easily update
+the role when new version comes out.
 
 
 Example Playbook

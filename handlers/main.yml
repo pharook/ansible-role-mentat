@@ -3,3 +3,8 @@
 - name: Refresh APT cache
   apt:
     update_cache: yes
+
+- name: Restart NRPE service
+  service:
+    name: "{{ hm_monitored__service_name }}"
+    state: restarted

@@ -131,3 +131,11 @@ hm_mentat__deprecated_files:
   - /var/mentat/spool/_pickup
   - /var/mentat/spool/_enricher
   - /var/mentat/spool/_storage
+
+#-------------------------------------------------------------------------------
+
+#
+# Provide default value for Nagios NRPE service in case role honzamach.monitored
+# is not executed as well.
+#
+hm_monitored__service_name: nagios-nrpe-server

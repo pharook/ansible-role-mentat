@@ -1,0 +1,33 @@
+#----------------------- <+++ansible-managed-file+++> -------------------------+
+#
+#                             IMPORTANT WARNING
+#
+#  This file is managed remotely by Ansible orchestration tool. Any local
+#  changes will be overwritten without any notice !!! You have been warned !!!
+#
+#----------------------- <+++ansible-managed-file+++> -------------------------+
+
+#
+# Check running processes.
+#
+/usr/local/bin/mentat-controller.py --command status --nagios-plugin --log-level warning | cut -f 1 -d \; | sed 's/^\s//'
+
+#
+# Check queue error directory size.
+#
+echo -n "INSP A ERRS: "
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/errors -w 100 -c 1000
+echo -n "INSP A PEND: "
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/pending -w 100 -c 1000
+echo -n "INSP B ERRS: "
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/errors -w 100 -c 1000
+echo -n "INSP B PEND: "
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/pending -w 100 -c 1000
+echo -n "ENRCH  ERRS: "
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/errors -w 100 -c 1000
+echo -n "ENRCH  PEND: "
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/pending -w 100 -c 1000
+echo -n "STRG   ERRS: "
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/errors -w 100 -c 1000
+echo -n "STRG   PEND: "
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/pending -w 100 -c 1000

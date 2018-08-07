@@ -59,13 +59,17 @@
   args:
     creates: /etc/mentat/ansible/mentat-precache.py.mark
 
+- name: Start Mentat real-time message processing modules
+  shell: /usr/local/bin/mentat-controller.py --command=start
+  register: mentat_start_result
+  changed_when: "'Launching module' in mentat_start_result.stdout"
+
 - name: Enable Mentat post-processing modules
   shell: /usr/local/bin/mentat-controller.py --command=enable
   register: mentat_enable_result
   changed_when: "'Enabling module' in mentat_enable_result.stdout"
 
-- name: Ensuring Mentat system is running and enabled at system start
+- name: Ensuring Mentat system is enabled at system start
   service:
     name: mentat
-    state: started
     enabled: yes

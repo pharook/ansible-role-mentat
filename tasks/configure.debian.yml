@@ -1,13 +1,19 @@
 ---
 
 - name: Creating required databases
-  shell: /etc/mentat/scripts/sqldb-init.sh
+  shell: /etc/mentat/scripts/sqldb-init.sh && touch /etc/mentat/ansible/sqldb-init.sh.mark
+  args:
+    creates: /etc/mentat/ansible/sqldb-init.sh.mark
 
 - name: Creating database schemas and indices
-  shell: /usr/local/bin/mentat-dbmngr.py --command init
+  shell: /usr/local/bin/mentat-dbmngr.py --command init && touch /etc/mentat/ansible/mentat-dbmngr.py.mark
+  args:
+    creates: /etc/mentat/ansible/mentat-dbmngr.py.mark
 
 - name: Precaching database enumerations and dictionaries
-  shell: /usr/local/bin/mentat-precache.py --allow-empty
+  shell: /usr/local/bin/mentat-precache.py --allow-empty && touch /etc/mentat/ansible/mentat-precache.py.mark
+  args:
+    creates: /etc/mentat/ansible/mentat-precache.py.mark
 
 - name: Enable Mentat post-processing modules
   shell: /usr/local/bin/mentat-controller.py --command=enable

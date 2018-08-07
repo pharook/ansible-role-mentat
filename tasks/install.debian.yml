@@ -89,3 +89,11 @@
   shell: /etc/mentat/scripts/fetch-geoipdb.sh
   args:
     creates: /var/opt/opensourcedbs/.download.ts
+
+- name: Managing Ansible workspace and cache on remote server
+  file:
+    path: /etc/mentat/ansible
+    state: directory
+    owner: root
+    group: root
+    mode: 0755

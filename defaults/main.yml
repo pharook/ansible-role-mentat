@@ -16,14 +16,10 @@ hm_mentat__group: mentat
 hm_mentat__package_repository_url: https://alchemist.cesnet.cz
 
 #
-# Name of the package suite to use for 'prodution' level servers.
+# Enforce which package suite to install on target servers no matter the membership
+# in groups ``servers-production``, ``servers-demo`` and ``servers-development``.
 #
-hm_mentat__suite_production: production
-
-#
-# Name of the package suite to use for 'development' level servers.
-#
-hm_mentat__suite_development: development
+hm_mentat__suite:
 
 #
 # List of Mentat-related packages, that will be installed on target system.

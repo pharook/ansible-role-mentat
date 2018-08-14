@@ -76,19 +76,13 @@ that can be overriden and adjusted as needed:
 	* *Datatype:* ``string``
     * *Default:* ``https://alchemist.cesnet.cz``
 
-.. envvar:: hm_mentat__suite_production
+.. envvar:: hm_mentat__suite
 
-	Name of the package suite to use for *prodution* level servers.
-
-	* *Datatype:* ``string``
-    * *Default:* ``production``
-
-.. envvar:: hm_mentat__suite_development
-
-	Name of the package suite to use for *development* level servers.
+	Enforce which package suite to install on target servers no matter the membership
+	in groups ``servers-production``, ``servers-demo`` and ``servers-development``.
 
 	* *Datatype:* ``string``
-    * *Default:* ``development``
+    * *Default:* (undefined)
 
 .. envvar:: hm_mentat__package_list
 

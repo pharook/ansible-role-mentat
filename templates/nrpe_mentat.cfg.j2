@@ -10,7 +10,7 @@
 #
 # Check running processes.
 #
-command[check_mentat]=/usr/local/bin/mentat-controller.py --command status --nagios-plugin --log-level warning
+command[check_mentat]=/usr/local/bin/mentat-controller.py --command status --nagios-plugin --log-level warning --shell
 command[check_mentat_ins]=/usr/lib/nagios/plugins/check_procs -c 2:2 -C python3 -a "python3 /usr/local/bin/mentat-inspector.py"
 command[check_mentat_enr]=/usr/lib/nagios/plugins/check_procs -c 1:1 -C python3 -a "python3 /usr/local/bin/mentat-enricher.py"
 command[check_mentat_str]=/usr/lib/nagios/plugins/check_procs -c 1:1 -C python3 -a "python3 /usr/local/bin/mentat-storage.py"
@@ -18,7 +18,7 @@ command[check_mentat_str]=/usr/lib/nagios/plugins/check_procs -c 1:1 -C python3 
 #
 # Check event database.
 #
-command[check_mentat_edb]=/usr/local/bin/mentat-dbmngr.py --command watchdog-events --nagios-plugin --log-level warning
+command[check_mentat_edb]=/usr/local/bin/mentat-dbmngr.py --command watchdog-events --nagios-plugin --log-level warning --shell --user nagios --group nagios
 
 #
 # Check queue sizes.

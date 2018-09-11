@@ -91,9 +91,9 @@ that can be overriden and adjusted as needed:
 	* *Datatype:* ``list of strings``
     * *Default:* (please see YAML file ``defaults/main.yml``)
 
-.. envvar:: hm_mentat_skip_cleanup
+.. envvar:: hm_mentat_do_cleanup
 
-	Skip system cleanup (flag).
+	Do system cleanup (flag).
 
 	* *Datatype:* ``boolean``
     * *Default:* ``false``

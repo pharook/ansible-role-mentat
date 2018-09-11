@@ -13,7 +13,7 @@
       with_items: "{{ hm_mentat__deprecated_files }}"
       when: item not in ["/","/bin","/boot","/lib","/root","/sbin","/usr","/var"]
 
-  when: 'not hm_mentat__skip_cleanup'
+  when: hm_mentat__do_cleanup
 
 #
 # Choose which package suite should be installed on target system.

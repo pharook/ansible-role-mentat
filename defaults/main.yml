@@ -28,9 +28,9 @@ hm_mentat__package_list:
   - mentat-ng
 
 #
-# Skip system cleanup (true,false).
+# Do system cleanup (true,false).
 #
-hm_mentat__skip_cleanup: false
+hm_mentat__do_cleanup: false
 
 #
 # Force APT cache update before installing any packages ('yes','no')

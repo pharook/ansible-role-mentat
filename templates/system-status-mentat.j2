@@ -20,7 +20,7 @@ echo -n "INSP A ERRS: "
 echo -n "INSP A PEND: "
 /usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/pending -w 100 -c 1000
 echo -n "INSP A INCM: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/incoming -w 1000 -c 10000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/incoming -w 5000 -c 10000
 echo -n "INSP A TEMP: "
 /usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/tmp -w 100 -c 1000
 echo -n "INSP B ERRS: "
@@ -28,7 +28,7 @@ echo -n "INSP B ERRS: "
 echo -n "INSP B PEND: "
 /usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/pending -w 100 -c 1000
 echo -n "INSP B INCM: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/incoming -w 1000 -c 10000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/incoming -w 5000 -c 10000
 echo -n "INSP B TEMP: "
 /usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/tmp -w 100 -c 1000
 echo -n "ENRCH  ERRS: "
@@ -36,7 +36,7 @@ echo -n "ENRCH  ERRS: "
 echo -n "ENRCH  PEND: "
 /usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/pending -w 100 -c 1000
 echo -n "ENRCH  INCM: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/incoming -w 1000 -c 10000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/incoming -w 5000 -c 10000
 echo -n "ENRCH  TEMP: "
 /usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/tmp -w 100 -c 1000
 echo -n "STRG   ERRS: "
@@ -44,6 +44,6 @@ echo -n "STRG   ERRS: "
 echo -n "STRG   PEND: "
 /usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/pending -w 100 -c 1000
 echo -n "STRG   INCM: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/incoming -w 1000 -c 10000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/incoming -w 5000 -c 10000
 echo -n "STRG   TEMP: "
 /usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/tmp -w 100 -c 1000

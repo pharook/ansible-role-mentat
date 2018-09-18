@@ -11,9 +11,6 @@
 # Check running processes.
 #
 command[check_mentat]=/usr/local/bin/mentat-controller.py --command status --nagios-plugin --log-level warning --shell
-command[check_mentat_ins]=/usr/lib/nagios/plugins/check_procs -c 2:2 -C python3 -a "python3 /usr/local/bin/mentat-inspector.py"
-command[check_mentat_enr]=/usr/lib/nagios/plugins/check_procs -c 1:1 -C python3 -a "python3 /usr/local/bin/mentat-enricher.py"
-command[check_mentat_str]=/usr/lib/nagios/plugins/check_procs -c 1:1 -C python3 -a "python3 /usr/local/bin/mentat-storage.py"
 
 #
 # Check event database.
@@ -25,9 +22,13 @@ command[check_mentat_edb]=/usr/local/bin/mentat-dbmngr.py --command watchdog-eve
 #
 command[check_mentat_inspector_a_errors_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/errors -w 100 -c 1000
 command[check_mentat_inspector_a_pending_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/pending -w 100 -c 1000
+command[check_mentat_inspector_a_incoming_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/incoming -w 5000 -c 10000
 command[check_mentat_inspector_b_errors_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/errors -w 100 -c 1000
 command[check_mentat_inspector_b_pending_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/pending -w 100 -c 1000
+command[check_mentat_inspector_b_incoming_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/incoming -w 5000 -c 10000
 command[check_mentat_enricher_errors_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/errors -w 100 -c 1000
 command[check_mentat_enricher_pending_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/pending -w 100 -c 1000
+command[check_mentat_enricher_incoming_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/incoming -w 5000 -c 10000
 command[check_mentat_storage_errors_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/errors -w 100 -c 1000
 command[check_mentat_storage_pending_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/pending -w 100 -c 1000
+command[check_mentat_storage_incoming_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/incoming -w 5000 -c 10000

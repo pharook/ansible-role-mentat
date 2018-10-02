@@ -16,34 +16,34 @@
 # Check queue error directory size.
 #
 echo -n "INSP A ERRS: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/errors -w 100 -c 1000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
 echo -n "INSP A PEND: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/pending -w 100 -c 1000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
 echo -n "INSP A INCM: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/incoming -w 5000 -c 10000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
 echo -n "INSP A TEMP: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/tmp -w 100 -c 1000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/tmp -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
 echo -n "INSP B ERRS: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/errors -w 100 -c 1000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
 echo -n "INSP B PEND: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/pending -w 100 -c 1000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
 echo -n "INSP B INCM: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/incoming -w 5000 -c 10000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
 echo -n "INSP B TEMP: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/tmp -w 100 -c 1000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/tmp -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
 echo -n "ENRCH  ERRS: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/errors -w 100 -c 1000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
 echo -n "ENRCH  PEND: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/pending -w 100 -c 1000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
 echo -n "ENRCH  INCM: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/incoming -w 5000 -c 10000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
 echo -n "ENRCH  TEMP: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/tmp -w 100 -c 1000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/tmp -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
 echo -n "STRG   ERRS: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/errors -w 100 -c 1000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
 echo -n "STRG   PEND: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/pending -w 100 -c 1000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
 echo -n "STRG   INCM: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/incoming -w 5000 -c 10000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
 echo -n "STRG   TEMP: "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/tmp -w 100 -c 1000
+/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/tmp -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}

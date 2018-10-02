@@ -38,6 +38,21 @@ hm_mentat__do_cleanup: false
 hm_mentat__apt_force_update: no
 
 #
+# Monitoring configuration setting for checking queue size in the *incoming* directory.
+#
+hm_mentat__check_queue_size:
+  w: 5000
+  c: 10000
+
+#
+# Monitoring configuration setting for checking queue size in other than *incoming*
+# directories.
+#
+hm_mentat__check_queue_dirs:
+  w: 100
+  c: 1000
+
+#
 # List of deprecated files and folders that may be stil present after previous
 # versions of Mentat system. These will be removed to keep the system tidy.
 #

@@ -57,65 +57,87 @@ that can be overriden and adjusted as needed:
 
 .. envvar:: hm_mentat__user
 
-	Name of the UNIX system user for Mentat system.
+    Name of the UNIX system user for Mentat system.
 
-	* *Datatype:* ``string``
+    * *Datatype:* ``string``
     * *Default:* ``mentat``
 
 .. envvar:: hm_mentat__group
 
-	Name of the UNIX system group for Mentat system.
+    Name of the UNIX system group for Mentat system.
 
-	* *Datatype:* ``string``
+    * *Datatype:* ``string``
     * *Default:* ``mentat``
 
 .. envvar:: hm_mentat__package_repository_url
 
-	Base URL to package repository.
+    Base URL to package repository.
 
-	* *Datatype:* ``string``
+    * *Datatype:* ``string``
     * *Default:* ``https://alchemist.cesnet.cz``
 
 .. envvar:: hm_mentat__suite
 
-	Enforce which package suite to install on target servers no matter the membership
-	in groups ``servers-production``, ``servers-demo`` and ``servers-development``.
+    Enforce which package suite to install on target servers no matter the membership
+    in groups ``servers-production``, ``servers-demo`` and ``servers-development``.
 
-	* *Datatype:* ``string``
+    * *Datatype:* ``string``
     * *Default:* (undefined)
 
 .. envvar:: hm_mentat__package_list
 
-	List of Mentat-related packages, that will be installed on target system.
+    List of Mentat-related packages, that will be installed on target system.
 
-	* *Datatype:* ``list of strings``
+    * *Datatype:* ``list of strings``
     * *Default:* (please see YAML file ``defaults/main.yml``)
 
 .. envvar:: hm_mentat_do_cleanup
 
-	Do system cleanup (flag).
+    Do system cleanup (flag).
 
-	* *Datatype:* ``boolean``
+    * *Datatype:* ``boolean``
     * *Default:* ``false``
+
+.. envvar:: hm_mentat__apt_force_update
+
+    Force APT cache update before installing any packages ('yes','no').
+
+    * *Datatype:* ``string``
+    * *Default:* ``no``
+
+.. envvar:: hm_mentat__check_queue_size:
+
+    Monitoring configuration setting for checking queue size in the *incoming* directory.
+
+    * *Datatype:* ``dict``
+    * *Default:* ``{'w': 5000, 'c': 10000}``
+
+.. envvar:: hm_mentat__check_queue_dirs:
+
+    Monitoring configuration setting for checking queue size in other than *incoming*
+    directories.
+
+    * *Datatype:* ``dict``
+    * *Default:* ``{'w': 100, 'c': 1000}``
 
 .. envvar:: hm_mentat__deprecated_files
 
-	List of deprecated files and folders that may be stil present after previous
-	versions of Mentat system. These will be removed to keep the system tidy.
+    List of deprecated files and folders that may be stil present after previous
+    versions of Mentat system. These will be removed to keep the system tidy.
 
-	* *Datatype:* ``list of strings``
+    * *Datatype:* ``list of strings``
     * *Default:* (please see YAML file ``defaults/main.yml``)
 
 Additionally this role makes use of following built-in Ansible variables:
 
 .. envvar:: ansible_lsb['codename']
 
-	Debian distribution codename is used for :ref:`template customization <section-overview-customize-templates>`
-	feature.
+    Debian distribution codename is used for :ref:`template customization <section-overview-customize-templates>`
+    feature.
 
 .. envvar:: group_names
 
-	See section *Group memberships* below for details.
+    See section *Group memberships* below for details.
 
 
 Foreign variables
@@ -182,31 +204,31 @@ Example Playbook
 
 Example content of inventory file ``inventory``::
 
-	# EITHER: Add your server to 'servers-development' group to install 'development' package suite:
-	[servers-development]
-	localhost
+    # EITHER: Add your server to 'servers-development' group to install 'development' package suite:
+    [servers-development]
+    localhost
 
-	# OR: Add your server to 'servers-production' group to install 'production' package suite:
-	[servers-production]
-	localhost
+    # OR: Add your server to 'servers-production' group to install 'production' package suite:
+    [servers-production]
+    localhost
 
-	[servers-mentat]
-	localhost
+    [servers-mentat]
+    localhost
 
 Example content of role playbook file ``playbook.yml``::
 
-	- hosts: servers-mentat
-	  remote_user: root
-	  roles:
-	    - role: honzamach.mentat
-	  tags:
-	    - role-mentat
+    - hosts: servers-mentat
+      remote_user: root
+      roles:
+        - role: honzamach.mentat
+      tags:
+        - role-mentat
 
 Example usage::
 
-	ansible-playbook -i inventory playbook.yml
-	ansible-playbook -i inventory playbook.yml --extra-vars '{"hm_mentat__skip_cleanup":true}'
-	ansible-playbook -i inventory playbook.yml --extra-vars '{"hm_mentat__apt_force_update":"yes"}'
+    ansible-playbook -i inventory playbook.yml
+    ansible-playbook -i inventory playbook.yml --extra-vars '{"hm_mentat__skip_cleanup":true}'
+    ansible-playbook -i inventory playbook.yml --extra-vars '{"hm_mentat__apt_force_update":"yes"}'
 
 
 License

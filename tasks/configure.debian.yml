@@ -54,6 +54,16 @@
   args:
     creates: /etc/mentat/ansible/mentat-dbmngr.py.mark
 
+- name: Stamping main database to latest migration revision
+  shell: hawat-cli db stamp head && touch /etc/mentat/ansible/hawat-cli-stamp-head.mark
+  args:
+    creates: /etc/mentat/ansible/hawat-cli-stamp-head.mark
+
+- name: Stamping event database to latest migration revision
+  shell: /etc/mentat/scripts/sqldb-migrate.sh stamp head && touch /etc/mentat/ansible/sqldb-stamp-head.mark
+  args:
+    creates: /etc/mentat/ansible/sqldb-stamp-head.mark
+
 - name: Precaching database enumerations and dictionaries
   shell: /usr/local/bin/mentat-precache.py --allow-empty && touch /etc/mentat/ansible/mentat-precache.py.mark
   args:

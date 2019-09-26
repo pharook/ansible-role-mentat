@@ -29,11 +29,15 @@
 
     - set_fact:
         hm_mentat__install_suite: "production"
-      when: 'not "servers-development" in group_names'
+      when: '"servers_production" in group_names'
+
+    - set_fact:
+        hm_mentat__install_suite: "release"
+      when: '"servers_testing" in group_names'
 
     - set_fact:
         hm_mentat__install_suite: "development"
-      when: '"servers-development" in group_names'
+      when: '"servers_development" in group_names'
 
   when: not hm_mentat__install_suite
 
@@ -60,17 +64,13 @@
     mode: 0644
     backup: yes
   with_first_found:
-    - "host_files/{{ inventory_hostname }}/sources.list.j2"
-    - "group_files/servers-production/sources.list.{{ ansible_lsb['codename'] }}.j2"
-    - "group_files/servers-production/sources.list.j2"
-    - "group_files/servers-development/sources.list.{{ ansible_lsb['codename'] }}.j2"
-    - "group_files/servers-development/sources.list.j2"
-    - "group_files/servers-demo/sources.list.{{ ansible_lsb['codename'] }}.j2"
-    - "group_files/servers-demo/sources.list.j2"
-    - "group_files/servers/sources.list.{{ ansible_lsb['codename'] }}.j2"
-    - "group_files/servers/sources.list.j2"
-    - "sources.list.{{ ansible_lsb['codename'] }}.j2"
-    - "sources.list.j2"
+    - "host_files/{{ inventory_hostname }}/mentat.list.j2"
+    - "group_files/servers-{{ msms_server_type }}/mentat.list.{{ ansible_lsb['codename'] }}.j2"
+    - "group_files/servers-{{ msms_server_type }}/mentat.list.j2"
+    - "group_files/servers/mentat.list.{{ ansible_lsb['codename'] }}.j2"
+    - "group_files/servers/mentat.list.j2"
+    - "mentat.list.{{ ansible_lsb['codename'] }}.j2"
+    - "mentat.list.j2"
   notify: Refresh APT cache
 
 
@@ -85,11 +85,6 @@
     name: "{{ hm_mentat__package_list }}"
     state: latest
     update_cache: "{{ hm_mentat__apt_force_update }}"
-
-- name: Installing required Python3 modules
-  pip:
-    requirements: /etc/mentat/requirements.pip
-    executable: pip3
 
 - name: Downloading IP geolocation databases
   shell: /etc/mentat/scripts/fetch-geoipdb.sh

@@ -11,7 +11,7 @@
 #   git clone https://github.com/honzamach/ansible-role-mentat.git honzamach.mentat
 #
 
-- hosts: servers-mentat
+- hosts: servers_mentat
   remote_user: root
   roles:
     - role: honzamach.mentat

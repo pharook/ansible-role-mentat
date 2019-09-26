@@ -37,7 +37,7 @@ This role is dependent on following roles:
 
 Following roles have direct dependency on this role:
 
-* :ref:`mentat_demo <section-role-mentat-demo>`
+* :ref:`mentat_cesnet <section-role-mentat-cesnet>`
 
 
 Managed files
@@ -147,7 +147,7 @@ This role uses following foreign variables defined in other roles:
 
 :envvar:`hm_monitored__service_name`
 
-    Name of the NRPE service in case the server is in **servers-monitored**
+    Name of the NRPE service in case the server is in **servers_monitored**
     group and the playbook is automagically configuring monitoring of the Mentat
     system.
 
@@ -169,7 +169,7 @@ Group memberships
   to choose which package suite (*development* or *production*) will be installed
   on target host.
 
-* **servers-monitored**
+* **servers_monitored**
 
   In case the target server is member of this group Nagios monitoring is automagically
   configured for the Mentat system.
@@ -212,12 +212,12 @@ Example content of inventory file ``inventory``::
     [servers-production]
     localhost
 
-    [servers-mentat]
+    [servers_mentat]
     localhost
 
 Example content of role playbook file ``playbook.yml``::
 
-    - hosts: servers-mentat
+    - hosts: servers_mentat
       remote_user: root
       roles:
         - role: honzamach.mentat

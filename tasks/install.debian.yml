@@ -64,11 +64,11 @@
     mode: 0644
     backup: yes
   with_first_found:
-    - "host_files/{{ inventory_hostname }}/mentat.list.j2"
-    - "group_files/servers-{{ msms_server_type }}/mentat.list.{{ ansible_lsb['codename'] }}.j2"
-    - "group_files/servers-{{ msms_server_type }}/mentat.list.j2"
-    - "group_files/servers/mentat.list.{{ ansible_lsb['codename'] }}.j2"
-    - "group_files/servers/mentat.list.j2"
+    - "inventory/host_files/{{ inventory_hostname }}/honzamach.mentat/mentat.list.j2"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat/mentat.list.{{ ansible_lsb['codename'] }}.j2"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat/mentat.list.j2"
+    - "inventory/group_files/servers/honzamach.mentat/mentat.list.{{ ansible_lsb['codename'] }}.j2"
+    - "inventory/group_files/servers/honzamach.mentat/mentat.list.j2"
     - "mentat.list.{{ ansible_lsb['codename'] }}.j2"
     - "mentat.list.j2"
   notify: Refresh APT cache

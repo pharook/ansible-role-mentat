@@ -4,7 +4,7 @@
   assert:
     that:
         - '"servers_testing" in group_names or "servers_development" in group_names or "servers_production" in group_names'
-        - 'not "servers_demo" in group_names or ("servers_demo" in group_names and not ("servers_development" in group_names or "servers_production" in group_names))'
-        - 'not "servers_development" in group_names or ("servers_development" in group_names and not ("servers_demo" in group_names or "servers_production" in group_names))'
-        - 'not "servers_production" in group_names or ("servers_production" in group_names and not ("servers_demo" in group_names or "servers_development" in group_names))'
-    msg: "Server must be member of exactly one of the 'servers_demo', 'servers_development', 'servers_production' groups"
+        - 'not "servers_testing" in group_names or ("servers_testing" in group_names and not ("servers_development" in group_names or "servers_production" in group_names))'
+        - 'not "servers_development" in group_names or ("servers_development" in group_names and not ("servers_testing" in group_names or "servers_production" in group_names))'
+        - 'not "servers_production" in group_names or ("servers_production" in group_names and not ("servers_testing" in group_names or "servers_development" in group_names))'
+    msg: "Server must be member of exactly one of the 'servers_testing', 'servers_development', 'servers_production' groups"

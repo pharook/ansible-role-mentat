@@ -17,6 +17,12 @@ echo "+-------------------------------------------------------------------------
 /usr/local/bin/mentat-controller.py --command status --nagios-plugin --log-level warning | cut -f 1 -d \; | sed 's/^\s//'
 
 #
+# Check event database.
+#
+/usr/local/bin/mentat-dbmngr.py --command watchdog-events --nagios-plugin --log-level warning --shell | cut -f 1 -d \; | sed 's/^\s//'
+
+
+#
 # Check queue error directory size.
 #
 echo -n "INSP A ERRS - "

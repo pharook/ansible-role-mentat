@@ -105,14 +105,14 @@ that can be overriden and adjusted as needed:
     * *Datatype:* ``string``
     * *Default:* ``no``
 
-.. envvar:: hm_mentat__check_queue_size:
+.. envvar:: hm_mentat__check_queue_size
 
     Monitoring configuration setting for checking queue size in the *incoming* directory.
 
     * *Datatype:* ``dict``
     * *Default:* ``{'w': 5000, 'c': 10000}``
 
-.. envvar:: hm_mentat__check_queue_dirs:
+.. envvar:: hm_mentat__check_queue_dirs
 
     Monitoring configuration setting for checking queue size in other than *incoming*
     directories.

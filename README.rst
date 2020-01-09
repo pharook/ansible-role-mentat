@@ -34,6 +34,7 @@ Dependencies
 This role is dependent on following roles:
 
 * :ref:`postgresql <section-role-postgresql>`
+* :ref:`geoip <section-role-geoip>`
 
 Following roles have direct dependency on this role:
 

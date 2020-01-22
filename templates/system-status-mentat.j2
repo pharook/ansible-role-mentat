@@ -7,53 +7,33 @@
 #
 #----------------------- <+++ansible-managed-file+++> -------------------------+
 
-echo "+------------------------------------------------------------------------------+"
-echo "| Mentat status                                                                |"
-echo "+------------------------------------------------------------------------------+"
+# Load shared library.
+. /opt/msms/lib/libmsms.sh
+
+
+widget_separator_text "MENTAT" "${MSMS_SEPARATOR_GLYPH}" "${MSMS_SEPARATOR_PAD}" "${MSMS_FLAG_COLOR}" "${MSMS_WIDGET_WIDTH}"
+
 
 #
 # Check running processes.
 #
-/usr/local/bin/mentat-controller.py --command status --nagios-plugin --log-level warning | cut -f 1 -d \; | sed 's/^\s//'
+/usr/local/bin/mentat-controller.py --command status --nagios-plugin --log-level warning | cut -f 1 -d \; | sed 's/^\s//' | nrpe_status_colorize "${MSMS_FLAG_COLOR}"
 
 #
 # Check event database.
 #
-/usr/local/bin/mentat-dbmngr.py --command watchdog-events --nagios-plugin --log-level warning --shell | cut -f 1 -d \; | sed 's/^\s//'
-
+/usr/local/bin/mentat-dbmngr.py --command watchdog-events --nagios-plugin --log-level warning --shell | cut -f 1 -d \; | sed 's/^\s//' | nrpe_status_colorize "${MSMS_FLAG_COLOR}"
 
 #
 # Check queue error directory size.
 #
-echo -n "INSP A ERRS - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-echo -n "INSP A PEND - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-echo -n "INSP A INCM - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
-echo -n "INSP A TEMP - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/tmp -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-echo -n "INSP B ERRS - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-echo -n "INSP B PEND - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-echo -n "INSP B INCM - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
-echo -n "INSP B TEMP - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/tmp -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-echo -n "ENRCH  ERRS - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-echo -n "ENRCH  PEND - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-echo -n "ENRCH  INCM - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
-echo -n "ENRCH  TEMP - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/tmp -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-echo -n "STRG   ERRS - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-echo -n "STRG   PEND - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-echo -n "STRG   INCM - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
-echo -n "STRG   TEMP - "
-/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/tmp -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
+{% for mmodule in [['mentat-inspector.py', 'INSP A'], ['mentat-inspector-b.py', 'INSP B'], ['mentat-enricher.py', 'ENRCH '], ['mentat-storage.py', 'STRG  ']] %}
+echo -n "{{ mmodule[1] }} ERRS - "
+{{ hm_monitored__plugins_dir }}/check_file_count -d {{ hm_mentat__queue_dir }}/{{ mmodule[0] }}/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }} | nrpe_status_colorize "${MSMS_FLAG_COLOR}"
+echo -n "{{ mmodule[1] }} PEND - "
+{{ hm_monitored__plugins_dir }}/check_file_count -d {{ hm_mentat__queue_dir }}/{{ mmodule[0] }}/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }} | nrpe_status_colorize "${MSMS_FLAG_COLOR}"
+echo -n "{{ mmodule[1] }} INCM - "
+{{ hm_monitored__plugins_dir }}/check_file_count -d {{ hm_mentat__queue_dir }}/{{ mmodule[0] }}/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }} | nrpe_status_colorize "${MSMS_FLAG_COLOR}"
+echo -n "{{ mmodule[1] }} TEMP - "
+{{ hm_monitored__plugins_dir }}/check_file_count -d {{ hm_mentat__queue_dir }}/{{ mmodule[0] }}/tmp -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }} | nrpe_status_colorize "${MSMS_FLAG_COLOR}"
+{% endfor %}

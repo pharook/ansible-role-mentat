@@ -38,6 +38,11 @@ hm_mentat__do_cleanup: false
 hm_mentat__apt_force_update: no
 
 #
+# Path to queue directory.
+#
+hm_mentat__queue_dir: /var/mentat/spool
+
+#
 # Monitoring configuration setting for checking queue size in the *incoming* directory.
 #
 hm_mentat__check_queue_size:

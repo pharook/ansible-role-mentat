@@ -20,15 +20,9 @@ command[check_mentat_edb]=/usr/local/bin/mentat-dbmngr.py --command watchdog-eve
 #
 # Check queue sizes.
 #
-command[check_mentat_inspector_a_errors_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-command[check_mentat_inspector_a_pending_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-command[check_mentat_inspector_a_incoming_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector.py/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
-command[check_mentat_inspector_b_errors_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-command[check_mentat_inspector_b_pending_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-command[check_mentat_inspector_b_incoming_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-inspector-b.py/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
-command[check_mentat_enricher_errors_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-command[check_mentat_enricher_pending_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-command[check_mentat_enricher_incoming_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-enricher.py/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
-command[check_mentat_storage_errors_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-command[check_mentat_storage_pending_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
-command[check_mentat_storage_incoming_dir]=/usr/lib/nagios/plugins/check_file_count -d /var/mentat/spool/mentat-storage.py/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
+{% for mmodule in [['mentat-inspector.py', 'inspector_a'], ['mentat-inspector-b.py', 'inspector_b'], ['mentat-enricher.py', 'enricher'], ['mentat-storage.py', 'storage']] %}
+command[check_mentat_{{ mmodule[1] }}_errors_dir]={{ hm_monitored__plugins_dir }}/check_file_count -d {{ hm_mentat__queue_dir }}/{{ mmodule[0] }}/errors -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
+command[check_mentat_{{ mmodule[1] }}_pending_dir]={{ hm_monitored__plugins_dir }}/check_file_count -d {{ hm_mentat__queue_dir }}/{{ mmodule[0] }}/pending -w {{ hm_mentat__check_queue_dirs['w'] }} -c {{ hm_mentat__check_queue_dirs['c'] }}
+command[check_mentat_{{ mmodule[1] }}_incoming_dir]={{ hm_monitored__plugins_dir }}/check_file_count -d {{ hm_mentat__queue_dir }}/{{ mmodule[0] }}/incoming -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
+command[check_mentat_{{ mmodule[1] }}_temp_dir]={{ hm_monitored__plugins_dir }}/check_file_count -d {{ hm_mentat__queue_dir }}/{{ mmodule[0] }}/tmp -w {{ hm_mentat__check_queue_size['w'] }} -c {{ hm_mentat__check_queue_size['c'] }}
+{% endfor %}

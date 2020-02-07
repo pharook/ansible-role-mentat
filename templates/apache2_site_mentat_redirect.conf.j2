@@ -1,0 +1,29 @@
+#----------------------- <+++ansible-managed-file+++> -------------------------+
+#
+#                             IMPORTANT WARNING
+#
+#  This file is managed remotely by Ansible orchestration tool. Any local
+#  changes will be overwritten without any notice !!! You have been warned !!!
+#
+#----------------------- <+++ansible-managed-file+++> -------------------------+
+
+<VirtualHost *:80>
+{% if hm_mentat__server_admin %}
+    ServerAdmin {{ hm_mentat__server_admin }}
+{% else %}
+    ServerAdmin webmaster@{{ ansible_fqdn }}
+{% endif %}
+    ServerName {{ ansible_fqdn }}
+
+    DocumentRoot /var/www/
+
+    # Redirection to the secured Mentat web interface
+    <Location />
+        RewriteEngine On
+        RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+    </Location>
+
+    ErrorLog /var/log/apache2/error.log
+    LogLevel warn
+    CustomLog /var/log/apache2/access.log combined
+</VirtualHost>

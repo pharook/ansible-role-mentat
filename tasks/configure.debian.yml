@@ -75,3 +75,96 @@
   service:
     name: mentat
     enabled: yes
+
+- name: Configuring Apache redirection site for Hawat web interface
+  template:
+    src: "{{ item }}"
+    dest: /etc/apache2/sites-available/site_mentat_redirect.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  with_first_found:
+    - "inventory/host_files/{{ inventory_hostname }}/honzamach.mentat_cesnet/apache2_site_mentat_redirect.conf.j2"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat_cesnet/apache2_site_mentat_redirect.conf.{{ ansible_lsb['codename'] }}.j2"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat_cesnet/apache2_site_mentat_redirect.conf.j2"
+    - "inventory/group_files/servers/honzamach.mentat_cesnet/apache2_site_mentat_redirect.conf.{{ ansible_lsb['codename'] }}.j2"
+    - "inventory/group_files/servers/honzamach.mentat_cesnet/apache2_site_mentat_redirect.conf.j2"
+    - "apache2_site_mentat_redirect.conf.{{ ansible_lsb['codename'] }}.j2"
+    - "apache2_site_mentat_redirect.conf.j2"
+  notify:
+    - Restart web server service
+
+- name: Configuring Apache site for Hawat web interface
+  template:
+    src: "{{ item }}"
+    dest: /etc/apache2/sites-available/site_mentat-ng.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  with_first_found:
+    - "inventory/host_files/{{ inventory_hostname }}/honzamach.mentat_cesnet/apache2_site_mentat-ng.conf.j2"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat_cesnet/apache2_site_mentat-ng.conf.{{ ansible_lsb['codename'] }}.j2"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat_cesnet/apache2_site_mentat-ng.conf.j2"
+    - "inventory/group_files/servers/honzamach.mentat_cesnet/apache2_site_mentat-ng.conf.{{ ansible_lsb['codename'] }}.j2"
+    - "inventory/group_files/servers/honzamach.mentat_cesnet/apache2_site_mentat-ng.conf.j2"
+    - "apache2_site_mentat-ng.conf.{{ ansible_lsb['codename'] }}.j2"
+    - "apache2_site_mentat-ng.conf.j2"
+  notify:
+    - Restart web server service
+
+- name: Configure Apache2 linux user to mentat
+  replace:
+    path: /etc/apache2/envvars
+    regexp: '(\s+)export APACHE_RUN_USER=www-data(\s+.*)?$'
+    replace: '\1export APACHE_RUN_USER={{ hm_mentat__user }}\2'
+  notify:
+    - Restart web server service
+
+- name: Configure Apache2 linux group to mentat
+  replace:
+    path: /etc/apache2/envvars
+    regexp: '(\s+)export APACHE_RUN_GROUP=www-data(\s+.*)?$'
+    replace: '\1export APACHE_RUN_GROUP={{ hm_mentat__group }}\2'
+  notify:
+    - Restart web server service
+
+- name: Enabling necessary Apache2 modules
+  apache2_module:
+    state: present
+    name: "{{ item }}"
+    ignore_configcheck: True
+  with_items:
+    - rewrite
+    - ssl
+    - wsgi
+  notify:
+    - Restart web server service
+
+- name: Disabling default Apache2 sites
+  file:
+    path: "/etc/apache2/sites-enabled/{{ item }}"
+    state: absent
+  with_items:
+    - 000-default.conf
+    - default-ssl.conf
+  notify:
+    - Restart web server service
+
+- name: Enabling Apache2 redirection site for Hawat web interface
+  file:
+    src: /etc/apache2/sites-available/site_mentat_redirect.conf
+    dest: /etc/apache2/sites-enabled/site_mentat_redirect.conf
+    state: link
+  notify:
+    - Restart web server service
+
+- name: Enabling Apache2 site for Hawat web interface
+  file:
+    src: /etc/apache2/sites-available/site_mentat-ng.conf
+    dest: /etc/apache2/sites-enabled/site_mentat-ng.conf
+    state: link
+  notify:
+    - Restart web server service
+

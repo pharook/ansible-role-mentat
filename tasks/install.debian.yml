@@ -82,7 +82,7 @@
 
 - name: Installing packages
   apt:
-    name: "{{ hm_mentat__package_list }}"
+    name: "{{ hm_mentat__install_packages[ansible_os_family|lower]['apt'] }}"
     state: latest
     update_cache: "{{ hm_mentat__apt_force_update }}"
 

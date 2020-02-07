@@ -21,11 +21,12 @@ hm_mentat__package_repository_url: https://alchemist.cesnet.cz
 #
 hm_mentat__suite:
 
-#
-# List of Mentat-related packages, that will be installed on target system.
-#
-hm_mentat__package_list:
-  - mentat-ng
+hm_mentat__install_packages:
+  debian:
+    apt:
+      - mentat-ng
+      - apache2
+      - libapache2-mod-wsgi-py3
 
 #
 # Do system cleanup (true,false).
@@ -42,9 +43,12 @@ hm_mentat__apt_force_update: no
 #
 hm_mentat__queue_dir: /var/mentat/spool
 
-#
-# Monitoring configuration setting for checking queue size in the *incoming* directory.
-#
+hm_mentat__python_venv: /var/mentat/venv
+
+hm_mentat__server_admin:
+
+hm_mentat__webservice_name: apache2
+
 hm_mentat__check_queue_size:
   w: 5000
   c: 10000

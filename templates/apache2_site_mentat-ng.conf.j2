@@ -1,0 +1,101 @@
+#----------------------- <+++ansible-managed-file+++> -------------------------+
+#
+#                             IMPORTANT WARNING
+#
+#  This file is managed remotely by Ansible orchestration tool. Any local
+#  changes will be overwritten without any notice !!! You have been warned !!!
+#
+#----------------------- <+++ansible-managed-file+++> -------------------------+
+
+WSGIPythonHome {{ hm_mentat__python_venv }}
+
+<IfModule mod_ssl.c>
+<VirtualHost _default_:443>
+{% if hm_mentat__server_admin %}
+    ServerAdmin {{ hm_mentat__server_admin }}
+{% else %}
+    ServerAdmin webmaster@{{ ansible_fqdn }}
+{% endif %}
+    ServerName {{ ansible_fqdn }}
+
+    <IfModule mod_headers.c>
+        Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        Header always set X-Frame-Options DENY
+    </IfModule>
+
+    DocumentRoot /var/www
+
+    # TODO: For some reason the python-home option does not work and it is
+    # necessary to use server-wide directive WSGIPythonHome above to enable
+    # Python virtual environment.
+    #WSGIDaemonProcess hawat user={{ hm_mentat__user }} group={{ hm_mentat__group }} processes=10 threads=1 python-home={{ hm_mentat__python_venv }}
+    WSGIDaemonProcess hawat user={{ hm_mentat__user }} group={{ hm_mentat__group }} processes=10 threads=1
+    WSGIScriptAlias /mentat /usr/local/bin/mentat-hawat.wsgi
+    SetEnv SCRIPT_NAME /mentat/
+
+    <Location />
+        Require all granted
+    </Location>
+
+    <Directory {{ hm_mentat__python_venv }}/lib/python3.7/site-packages/hawat>
+        WSGIProcessGroup hawat
+        WSGIApplicationGroup %{GLOBAL}
+        Require all granted
+    </Directory>
+
+    <Location /mentat/auth_env/login>
+        AuthType shibboleth
+        ShibRequireSession On
+        Require valid-user
+    </Location>
+    <Location /mentat/auth_env/register>
+        AuthType shibboleth
+        ShibRequireSession On
+        Require valid-user
+    </Location>
+
+    RewriteEngine on
+    # Rewrite the path when accessed without a trailing slash.
+    RewriteRule ^/mentat$ /mentat/ [R]
+    # Rewrite webserver root to mentat application.
+    RewriteRule ^/$ /mentat/ [R]
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+
+    # Possible values: debug, info, notice, warn, error, crit, alert, emerg.
+    LogLevel warn
+
+    CustomLog ${APACHE_LOG_DIR}/ssl_access.log combined
+
+    SSLEngine on
+    #SSLOptions +FakeBasicAuth +ExportCertData +StrictRequire
+
+    # Using custom server certificates
+    SSLCertificateFile      {{ hm_certified__cert_host_dir }}/cert.pem
+    SSLCertificateKeyFile   {{ hm_certified__cert_host_dir }}/key.pem
+    SSLCertificateChainFile {{ hm_certified__cert_host_dir }}/chain.pem
+
+    # Enforce only strong SSL protocols. Generator as of August 2016. This
+    # tool is available at https://mozilla.github.io/server-side-tls/ssl-config-generator/
+    # Resource: https://httpd.apache.org/docs/trunk/ssl/ssl_howto.html#onlystrong
+    SSLProtocol         all -SSLv3 -TLSv1 -TLSv1.1
+    SSLCipherSuite      ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
+    SSLHonorCipherOrder on
+    SSLCompression      off
+    SSLSessionTickets   off
+
+    <FilesMatch "\.(cgi|shtml|phtml|php)$">
+        SSLOptions +StdEnvVars
+    </FilesMatch>
+    <Directory /usr/lib/cgi-bin>
+        SSLOptions +StdEnvVars
+    </Directory>
+
+    BrowserMatch "MSIE [2-6]" \
+        nokeepalive ssl-unclean-shutdown \
+        downgrade-1.0 force-response-1.0
+    # MSIE 7 and newer should be able to use keepalive
+    BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+
+</VirtualHost>
+</IfModule>

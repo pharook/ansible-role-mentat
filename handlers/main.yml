@@ -8,3 +8,8 @@
   service:
     name: "{{ hm_monitored__service_name }}"
     state: restarted
+
+- name: Restart web server service
+  service:
+    name: "{{ hm_mentat__webservice_name }}"
+    state: restarted

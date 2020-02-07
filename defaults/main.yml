@@ -1,24 +1,11 @@
 ---
 
-#
-# Name of the UNIX system user for Mentat system.
-#
 hm_mentat__user: mentat
 
-#
-# Name of the UNIX system group for Mentat system.
-#
 hm_mentat__group: mentat
 
-#
-# Base URL to package repository.
-#
 hm_mentat__package_repository_url: https://alchemist.cesnet.cz
 
-#
-# Enforce which package suite to install on target servers no matter the membership
-# in groups ``servers-production``, ``servers-demo`` and ``servers-development``.
-#
 hm_mentat__suite:
 
 hm_mentat__install_packages:
@@ -28,19 +15,10 @@ hm_mentat__install_packages:
       - apache2
       - libapache2-mod-wsgi-py3
 
-#
-# Do system cleanup (true,false).
-#
 hm_mentat__do_cleanup: false
 
-#
-# Force APT cache update before installing any packages ('yes','no')
-#
 hm_mentat__apt_force_update: no
 
-#
-# Path to queue directory.
-#
 hm_mentat__queue_dir: /var/mentat/spool
 
 hm_mentat__python_venv: /var/mentat/venv
@@ -53,18 +31,10 @@ hm_mentat__check_queue_size:
   w: 5000
   c: 10000
 
-#
-# Monitoring configuration setting for checking queue size in other than *incoming*
-# directories.
-#
 hm_mentat__check_queue_dirs:
   w: 100
   c: 1000
 
-#
-# List of deprecated files and folders that may be stil present after previous
-# versions of Mentat system. These will be removed to keep the system tidy.
-#
 hm_mentat__deprecated_files:
   - /etc/bash_completion.d/bash_mentat-ng-completion
   - /etc/default/default_mentat

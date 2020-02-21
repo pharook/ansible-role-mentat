@@ -9,8 +9,8 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
+        - buster
         - stretch
-        - jessie
   galaxy_tags:
     - system
     - monitoring

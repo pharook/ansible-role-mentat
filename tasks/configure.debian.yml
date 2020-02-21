@@ -76,6 +76,8 @@
     name: mentat
     enabled: yes
 
+#------------------------------------------------------------------------------
+
 - name: Configuring Apache redirection site for Hawat web interface
   template:
     src: "{{ item }}"
@@ -85,11 +87,11 @@
     mode: 0644
     backup: yes
   with_first_found:
-    - "inventory/host_files/{{ inventory_hostname }}/honzamach.mentat_cesnet/apache2_site_mentat_redirect.conf.j2"
-    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat_cesnet/apache2_site_mentat_redirect.conf.{{ ansible_lsb['codename'] }}.j2"
-    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat_cesnet/apache2_site_mentat_redirect.conf.j2"
-    - "inventory/group_files/servers/honzamach.mentat_cesnet/apache2_site_mentat_redirect.conf.{{ ansible_lsb['codename'] }}.j2"
-    - "inventory/group_files/servers/honzamach.mentat_cesnet/apache2_site_mentat_redirect.conf.j2"
+    - "inventory/host_files/{{ inventory_hostname }}/honzamach.mentat/apache2_site_mentat_redirect.conf.j2"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat/apache2_site_mentat_redirect.conf.{{ ansible_lsb['codename'] }}.j2"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat/apache2_site_mentat_redirect.conf.j2"
+    - "inventory/group_files/servers/honzamach.mentat/apache2_site_mentat_redirect.conf.{{ ansible_lsb['codename'] }}.j2"
+    - "inventory/group_files/servers/honzamach.mentat/apache2_site_mentat_redirect.conf.j2"
     - "apache2_site_mentat_redirect.conf.{{ ansible_lsb['codename'] }}.j2"
     - "apache2_site_mentat_redirect.conf.j2"
   notify:
@@ -104,11 +106,11 @@
     mode: 0644
     backup: yes
   with_first_found:
-    - "inventory/host_files/{{ inventory_hostname }}/honzamach.mentat_cesnet/apache2_site_mentat-ng.conf.j2"
-    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat_cesnet/apache2_site_mentat-ng.conf.{{ ansible_lsb['codename'] }}.j2"
-    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat_cesnet/apache2_site_mentat-ng.conf.j2"
-    - "inventory/group_files/servers/honzamach.mentat_cesnet/apache2_site_mentat-ng.conf.{{ ansible_lsb['codename'] }}.j2"
-    - "inventory/group_files/servers/honzamach.mentat_cesnet/apache2_site_mentat-ng.conf.j2"
+    - "inventory/host_files/{{ inventory_hostname }}/honzamach.mentat/apache2_site_mentat-ng.conf.j2"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat/apache2_site_mentat-ng.conf.{{ ansible_lsb['codename'] }}.j2"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat/apache2_site_mentat-ng.conf.j2"
+    - "inventory/group_files/servers/honzamach.mentat/apache2_site_mentat-ng.conf.{{ ansible_lsb['codename'] }}.j2"
+    - "inventory/group_files/servers/honzamach.mentat/apache2_site_mentat-ng.conf.j2"
     - "apache2_site_mentat-ng.conf.{{ ansible_lsb['codename'] }}.j2"
     - "apache2_site_mentat-ng.conf.j2"
   notify:

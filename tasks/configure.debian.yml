@@ -36,6 +36,8 @@
     - "system-status-mentat.j2"
   when: '"servers_commonenv" in group_names'
 
+#------------------------------------------------------------------------------
+
 - name: Creating required databases
   shell: /etc/mentat/scripts/sqldb-init.sh && touch /etc/mentat/ansible/sqldb-init.sh.mark
   args:

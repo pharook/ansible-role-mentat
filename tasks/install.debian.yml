@@ -86,6 +86,16 @@
     state: latest
     update_cache: "{{ hm_mentat__apt_force_update }}"
 
+- name: Applying site local patches
+  patch:
+    backup: yes
+    basedir: "{{ hm_mentat__python_venv }}"
+    src: "{{ item }}"
+  with_fileglob:
+    - "inventory/host_files/{{ inventory_hostname }}/honzamach.mentat/patches/*.patch"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.mentat/patches/*.patch"
+    - "inventory/group_files/servers/honzamach.mentat/patches/*.patch"
+
 - name: Downloading IP geolocation databases
   shell: /etc/mentat/scripts/fetch-geoipdb.sh
   args:

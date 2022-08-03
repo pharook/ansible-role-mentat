@@ -146,6 +146,25 @@
   notify:
     - Restart web server service
 
+- name: Disable mpm_event and mpm_worker
+  apache2_module:
+    state: absent
+    name: "{{ item }}"
+    ignore_configcheck: True
+  with_items:
+    - mpm_event
+    - mpm_worker
+  notify:
+    - Restart web server service
+
+- name: Enable mpm_prefork
+  apache2_module:
+    state: present
+    name: mpm_prefork
+    ignore_configcheck: True
+  notify:
+    - Restart web server service
+
 - name: Disabling default Apache2 sites
   file:
     path: "/etc/apache2/sites-enabled/{{ item }}"
